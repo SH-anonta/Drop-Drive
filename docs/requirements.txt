@@ -1,0 +1,3 @@
+Functional requirements:
+
+* Allow users to upload files

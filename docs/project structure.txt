@@ -1,0 +1,10 @@
+root/
+	|
+	docs/
+	templates/
+	utility/
+	router.php
+	index.php
+
+	
+
