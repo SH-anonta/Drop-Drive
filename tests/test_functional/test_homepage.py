@@ -1,15 +1,9 @@
 import unittest
 import time
-from selenium.webdriver import Chrome
+from selenium.webdriver import Firefox
 
 from page_objects import * # todo remove all import
-
-class BaseTestCase(unittest.TestCase):
-    def setUp(self):
-        self.browser = Chrome()
-
-    def tearDown(self):
-        self.browser.close()
+from test_functional.base_testcase import BaseTestCase
 
 
 class HomePageTest(BaseTestCase):

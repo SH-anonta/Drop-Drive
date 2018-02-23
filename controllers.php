@@ -108,6 +108,10 @@ namespace controllers{
         public static function post(){
 
         }
+
+        private static function validateData(){
+            
+        }
     }
 
 }
