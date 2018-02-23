@@ -1,6 +1,7 @@
 <?php
     // controllers are classes with get and post static methods
     // namespace Controllers;
+    require('utility/common.php');
 
     function postData($key){
         return isset($_POST[$key]) ? trim($_POST[$key]) : '';
@@ -35,8 +36,19 @@
 
     class UserProfile{
         public static function get(){
-            $context = array();
-            return array('templates/user_profile.php', $context);
+            $uid = UserProfile::getUserId();
+
+            $_page_message = 'Profile of user '. $uid;
+            require('templates/message_page.php');
+        }
+
+        private static function getUserId(){
+            $pattern = '/user\/(\d+)/';
+            $url = getRequestURI();
+
+            preg_match($pattern, $url, $match);
+            
+            return $match[1];
         }
     }
 
