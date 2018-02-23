@@ -1,5 +1,6 @@
 <?php
     require_once('controllers.php');
+    use utility\common\getRequestURI;
 
     class Router{
         

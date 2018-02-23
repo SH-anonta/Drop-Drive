@@ -1,4 +1,6 @@
 <?php
+
+namespace utility\common{
 	//return request url without the first root directory (for devolopment ease)
 	function getRequestURI(){
 		$url = $_SERVER['REQUEST_URI'];
@@ -8,5 +10,6 @@
 		$url = implode('/', $url);
 		return $url;
 	}
+}
 
 ?>
