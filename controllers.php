@@ -4,6 +4,7 @@
     
 namespace controllers{  
     require('utility/common.php');
+    use \utility\common\getPostData;
 
     function postData($key){
         return isset($_POST[$key]) ? trim($_POST[$key]) : '';
@@ -106,12 +107,99 @@ namespace controllers{
         }
 
         public static function post(){
+            // these variables are also used in the register.php template
+            // used to show previously posted data
+            $uname =      \utility\common\getPostData('user_name');
+            $email =      \utility\common\getPostData('email');
+            $pw =         \utility\common\getPostData('password');
+            $confirm_pw = \utility\common\getPostData('confirm_password');
 
-        }
-
-        private static function validateData(){
+            $errors= self::validateData($uname, $email, $pw, $confirm_pw);
             
+            // if there are validation errors
+            if(!empty($errors)){
+                $_registeration_error_list = $errors;
+                require('templates/register.php');
+            }
+            else{
+                $_page_message = 'All data are valid';
+                require('templates/message_page.php');
+            }
         }
+
+        private static function validateData($uname, $email, $pw, $confirm_pw){
+            $errors = array();
+
+            $errors= array_merge($errors, self::validateUserName($uname));
+            $errors= array_merge($errors, self::validateEmail($email));
+            $errors= array_merge($errors, self::validatePassword($pw));
+            $errors= array_merge($errors, self::validateConfirmPassword($pw, $confirm_pw));
+
+            return $errors;
+        }
+
+        // data validators
+
+        function validateUserName($uname){
+            $errors = array();
+
+            // a valid username is alphabetic characters of length 4-20
+            $valid_pattern = '/^[a-zA-Z]{4,20}$/';
+
+            if($uname == ''){
+                $errors[]= 'User name is required';
+            }
+            else if(! preg_match($valid_pattern, $uname)){
+                $errors[]= 'Username must be alphabet characters only and 4 to 20 characters long';
+            }
+
+            return $errors;
+        }
+
+        function validateEmail($email){
+            $errors = array();
+
+            //valid email pattern
+            $email_pattern = '/[a-z]+?\w*@\w+\.\w+/';
+
+            if($email == ''){
+                $errors[]= 'Email number is required';
+            }
+            else if(!preg_match($email_pattern, $email)){
+                $errors[]= 'Invalid email address';
+            }
+
+            // todo add check for existing email in db
+            return $errors;
+        }
+
+        function validatePassword($password){
+            $errors = array();
+            $pw_len = strlen($password);
+
+            if($password == ''){
+                $errors[]= 'Password is required';
+            }
+            else if($pw_len < 8){
+                $errors[]= 'Password must be atleast 8 characters long';
+            }
+            else if($pw_len > 512){
+                $errors[]= 'Password can not be longer than 512 characters';
+            }
+
+            return $errors;
+        }
+
+        function validateConfirmPassword($pw, $confirm_pw){
+            $errors = array();
+
+            if($pw != $confirm_pw){
+                $errors[]= 'Passwords do not match';
+            }
+
+            return $errors;
+        }
+        
     }
 
 }

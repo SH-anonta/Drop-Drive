@@ -10,6 +10,10 @@ namespace utility\common{
 		$url = implode('/', $url);
 		return $url;
 	}
+
+	function getPostData($key){
+		return isset($_POST[$key])?  $_POST[$key] : '';
+	}
 }
 
 ?>
