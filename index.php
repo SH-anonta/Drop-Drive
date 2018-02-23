@@ -4,7 +4,6 @@
 
 	// IMPORTANT: first / is skipped only for development ease
 	
-	
 	$uri = \utility\common\getRequestURI();
 	$controller = Router::resolveUrl($uri);
 	

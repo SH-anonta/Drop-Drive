@@ -3,7 +3,6 @@
     // namespace Controllers;
     
 namespace controllers{  
-        
     require('utility/common.php');
 
     function postData($key){
@@ -47,7 +46,7 @@ namespace controllers{
 
         private static function getUserId(){
             $pattern = '/user\/(\d+)/';
-            $url = getRequestURI();
+            $url = \utility\common\getRequestURI();
 
             preg_match($pattern, $url, $match);
             
@@ -76,10 +75,12 @@ namespace controllers{
     }
 
     class Login{
+        //get the login page
         public static function get(){
             require('templates/login.php');
         }
 
+        //attempt to login a user given uesrname and password in post data
         public static function post(){
             $uname = postData('user_name');
             $pw = postData('password');
