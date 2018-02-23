@@ -1,6 +1,9 @@
 <?php
     // controllers are classes with get and post static methods
     // namespace Controllers;
+    
+namespace controllers{  
+        
     require('utility/common.php');
 
     function postData($key){
@@ -52,6 +55,15 @@
         }
     }
 
+    class UserList{
+        public static function get(){
+            require_once('models/user.php');
+            
+            $_user_list = \models\User::getAllUsers();
+            require('templates/user_list.php');
+        }
+    }
+
     //This dispatcher get executed if no patterns could match the request url
     class Error404{
         public static function get(){
@@ -96,4 +108,6 @@
 
         }
     }
+
+}
 ?>
