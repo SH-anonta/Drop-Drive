@@ -17,6 +17,17 @@ namespace models{
 
             return $data;
         }
+
+        public static function createUser($uname, $email, $pw){
+            $conn = DBConnectionHandler::getConnection();
+            $query = sprintf('INSERT INTO user (UserName, Email, Password) VALUES(\'%s\',\'%s\',\'%s\')', $uname, $email, $pw);
+
+            if ($conn->query($query) === TRUE) {
+                echo "New record created successfully";
+            } else {
+                echo "Error: " . $query . "<br>" . $conn->error;
+            }
+        }
         
     }
 }

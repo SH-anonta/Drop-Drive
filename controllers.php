@@ -4,7 +4,7 @@
     
 namespace controllers{  
     require('utility/common.php');
-    use \utility\common\getPostData;
+    require('models/user.php');
 
     function postData($key){
         return isset($_POST[$key]) ? trim($_POST[$key]) : '';
@@ -124,6 +124,8 @@ namespace controllers{
             else{
                 $_page_message = 'All data are valid';
                 require('templates/message_page.php');
+                \models\User::createUser($uname, $email, $pw);
+
             }
         }
 
