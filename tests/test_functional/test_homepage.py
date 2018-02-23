@@ -1,4 +1,5 @@
 import unittest
+import time
 from selenium.webdriver import Chrome
 
 from page_objects import * # todo remove all import
@@ -12,11 +13,11 @@ class BaseTestCase(unittest.TestCase):
 
 
 class HomePageTest(BaseTestCase):
-    def __init__(self):
-        super().__init__()
 
     def test_pageLoads(self):
-        self.browser.get('localhost/filehost')
-        url = self.browser.current_url()
+        page_url = 'http://localhost/filehost/'
 
-        self.fail(url)
+        self.browser.get(page_url)
+
+        url = self.browser.current_url
+        self.assertEqual(url, page_url)
