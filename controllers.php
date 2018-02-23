@@ -59,7 +59,7 @@ namespace controllers{
         public static function get(){
             require_once('models/user.php');
             
-            $_user_list = \models\User::getAllUsers();
+            $_user_list = \models\User::getAll();
             require('templates/user_list.php');
         }
     }
@@ -124,7 +124,7 @@ namespace controllers{
             else{
                 $_page_message = 'All data are valid';
                 require('templates/message_page.php');
-                \models\User::createUser($uname, $email, $pw);
+                \models\User::create($uname, $email, $pw);
 
             }
         }

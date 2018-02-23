@@ -4,7 +4,7 @@ namespace models{
 
     // Handels queries and updates involving the users table
     class User{
-        public static function getAllUsers(){
+        public static function getAll(){
             $conn = DBConnectionHandler::getConnection();
             $query = 'SELECT UserName, Email from `user`';
             $result = $conn->query($query);
@@ -18,13 +18,11 @@ namespace models{
             return $data;
         }
 
-        public static function createUser($uname, $email, $pw){
+        public static function create($uname, $email, $pw){
             $conn = DBConnectionHandler::getConnection();
             $query = sprintf('INSERT INTO user (UserName, Email, Password) VALUES(\'%s\',\'%s\',\'%s\')', $uname, $email, $pw);
 
-            if ($conn->query($query) === TRUE) {
-                echo "New record created successfully";
-            } else {
+            if (!$conn->query($query)) {
                 echo "Error: " . $query . "<br>" . $conn->error;
             }
         }
