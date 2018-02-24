@@ -8,11 +8,23 @@
     </head>
     
     <body>
-        <pre>
+        <h3>All users</h3>
+        
+        <table>
+            <tr>
+                <td><b>UserName</b></td>
+                <td><b>Email</b></td>
+            </tr>
+
             <?php
-                var_dump($_user_list);
+                foreach($_user_list as $row){
+                    echo '<tr>';
+                    printf('<td>%s</td>', $row[0]);
+                    printf('<td>%s</td>', $row[1]);
+                    echo '</tr>';
+                }
             ?>
-        </pre>
+        </table>
 
     </body>
 </html>
