@@ -41,8 +41,17 @@ namespace controllers{
         public static function get(){
             $uid = UserProfile::getUserId();
 
-            $_page_message = 'Profile of user '. $uid;
-            require('templates/message_page.php');
+            $_user_id = $uid;
+            $_user = \models\User::getByID($uid);
+
+            if($_user){
+                require('templates/user_profile.php');
+            }
+            else{
+                require('templates/error404.php');
+            }
+
+            
         }
 
         private static function getUserId(){
@@ -90,7 +99,9 @@ namespace controllers{
             
             $_page_message= '';
             // validate user
-            if(isset($users[$uname]) && $users[$uname] === $pw){
+
+            $login_valid = \models\User::authenticateUser($uname, $pw);
+            if($login_valid){
                 $_page_message= 'Login was successful. Welcome '. $uname;
             }
             else{

@@ -28,6 +28,17 @@ namespace models{
 
             return self::$db_connection;
         }
+
+        public static function query($query){
+            $conn = self::getConnection();
+            $result = $conn->query($query);
+
+            if(!$result){
+                echo "Error: " . $query . "<br>" . $conn->error;
+            }
+
+            return $result;
+        }
     }
 }
     

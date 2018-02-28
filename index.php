@@ -14,5 +14,4 @@
 	else if($request_method == 'POST'){
 		$controller::post();
 	}
-	
 ?>

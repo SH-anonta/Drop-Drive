@@ -19,8 +19,11 @@
             <?php
                 foreach($_user_list as $row){
                     echo '<tr>';
-                    printf('<td>%s</td>', $row[0]);
-                    printf('<td>%s</td>', $row[1]);
+                        echo '<td>';
+                            printf('<a href="/filehost/user/%s">%s</a>', $row[2], $row[0]);
+                        echo '</td>';
+                        
+                        printf('<td>%s</td>', $row[1]);
                     echo '</tr>';
                 }
             ?>
