@@ -100,6 +100,13 @@ namespace controllers{
         }
     }
 
+    class Logout{
+        public static function get(){
+            \utility\session\Session::clearUser();
+            header('location:/filehost/');
+        }
+    }
+
     class Register{
         public static function get(){
             require('templates/register.php');

@@ -7,6 +7,7 @@
         private static $routes = array(
             array('/^$/',           \controllers\HomePage::class),      //
             array('/^login$/',      \controllers\Login::class),         // login
+            array('/^logout$/',      \controllers\Logout::class),       // logout
             array('/^register$/',   \controllers\Register::class),      // register
             array('/^about$/',      \controllers\About::class),         // about
             array('/^user\/(\d+)$/',\controllers\UserProfile::class),   // user/<int:user_id>
