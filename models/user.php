@@ -19,23 +19,14 @@ namespace models{
         }
 
         public static function create($uname, $email, $pw){
-            $conn = DBConnectionHandler::getConnection();
             $query = sprintf('INSERT INTO user (UserName, Email, Password) VALUES(\'%s\',\'%s\',\'%s\')', $uname, $email, $pw);
-
-            if (!$conn->query($query)) {
-                echo "Error: " . $query . "<br>" . $conn->error;
-            }
+            DBConnectionHandler::query($query);
         }
 
         public static function getByID($id){
             $query = sprintf('SELECT * from user where ID = \'%s\'', $id);
 
-            $conn = DBConnectionHandler::getConnection();
-            $result = $conn->query($query);
-
-            if (!$result) {
-                echo "Error: " . $query . "<br>" . $conn->error;
-            }
+            $result = DBConnectionHandler::query($query);
 
             if($result->num_rows == 0){
                 return null;
