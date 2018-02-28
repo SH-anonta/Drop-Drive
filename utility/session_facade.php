@@ -1,4 +1,5 @@
 <?php
+
 namespace utility\session{
     // Session variables 
     // user -> \models\User object, only set if the user is logged in
@@ -20,6 +21,7 @@ namespace utility\session{
             }
 
             public static function userIsLoggedIn(){
+                session_start();
                 return isset($_SESSION['user']) && $_SESSION['user'] != null;
             }
         }

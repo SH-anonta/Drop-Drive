@@ -5,6 +5,11 @@
     </head>
     
     <body>
+        <?php
+            // show header
+            require('fragments/header.php');
+        ?>
+
         <form action="/filehost/login" method="POST">
             <input required type="text" placeholder="User name" name="user_name">
             <br>

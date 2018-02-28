@@ -5,6 +5,11 @@
     </head>
     
     <body>
+        <?php
+            // show header
+            require('fragments/header.php');
+        ?>
+
         <h3>Register</h3>
 
         <?php

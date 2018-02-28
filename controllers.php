@@ -89,14 +89,15 @@ namespace controllers{
             $user = \models\User::authenticateUser($uname, $pw);
             if($user){
                 $_page_message= 'Login was successful. Welcome '. $uname;
-                
                 \utility\session\Session::setUser($user);
+                header('location:/filehost/');
             }
             else{
                 $_page_message= 'Login failed';
+                header('location:/filehost/login');
             }
             
-            require('templates/message_page.php');
+            
         }
     }
 
