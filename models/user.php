@@ -4,6 +4,23 @@ namespace models{
 
     // Handels queries and updates involving the users table
     class User{
+        //columns in the table
+        public $id;
+        public $user_name;
+        public $email;
+
+        //intentionally private constructor
+        private function __construct($id, $uname, $email){
+            $this->id = $id;
+            $this->user_name = $uname;
+            $this->email = $email;
+        }
+
+        // take asosciative array of uesr row, return equivilant user object
+        private static function assocToObj($assoc){
+            return new User($assoc['ID'], $assoc['UserName'], $assoc['Email']);
+        }
+
         public static function getAll(){
             $conn = DBConnectionHandler::getConnection();
             $query = 'SELECT * from `user`';
@@ -11,9 +28,8 @@ namespace models{
 
             $data = array();
             while($row = $result->fetch_assoc()){
-                $data[] = array($row['UserName'], $row['Email'], $row['ID']);
+                $data[] = self::assocToObj($row);
             }
-            //todo return array of User objects 
 
             return $data;
         }
@@ -32,7 +48,7 @@ namespace models{
                 return null;
             }
             else{
-                return $result->fetch_assoc();
+                return self::assocToObj($result->fetch_assoc());
             }
         }
 

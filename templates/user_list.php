@@ -17,13 +17,13 @@
             </tr>
 
             <?php
-                foreach($_user_list as $row){
+                foreach($_user_list as $user){
                     echo '<tr>';
                         echo '<td>';
-                            printf('<a href="/filehost/user/%s">%s</a>', $row[2], $row[0]);
+                            printf('<a href="/filehost/user/%s">%s</a>', $user->id, $user->user_name);
                         echo '</td>';
                         
-                        printf('<td>%s</td>', $row[1]);
+                        printf('<td>%s</td>', $user->email);
                     echo '</tr>';
                 }
             ?>

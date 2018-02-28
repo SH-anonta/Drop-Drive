@@ -9,17 +9,17 @@
         <table>
             <tr>
                 <td><b>ID</b></td>
-                <td> <?php echo $_user['ID'] ?> </td>
+                <td> <?php echo $_user->id ?> </td>
             </tr>
 
             <tr>
                 <td><b>Name</b></td>
-                <td> <?php echo $_user['UserName'] ?> </td>
+                <td> <?php echo $_user->user_name ?> </td>
             </tr>
 
             <tr>
                 <td><b>Email</b></td>
-                <td> <?php echo $_user['Email'] ?> </td>
+                <td> <?php echo $_user->email ?> </td>
             </tr>
 
 

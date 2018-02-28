@@ -8,6 +8,7 @@
         <h3>Register</h3>
 
         <?php
+            // if error messages were set, show them in list format
             if(!empty($_registeration_error_list)){
                 echo '<ul>';
                 foreach($_registeration_error_list as $err_msg){
