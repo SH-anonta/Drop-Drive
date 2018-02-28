@@ -52,12 +52,19 @@ namespace models{
             }
         }
 
+
+        // see if name and password match,
+        // return user object if username and password are valid
         public static function authenticateUser($uname, $pw){
-            $query = sprintf('SELECT ID from user where UserName=\'%s\' and Password=\'%s\' ', $uname, $pw);
+            $query = sprintf('SELECT * from user where UserName=\'%s\' and Password=\'%s\' ', $uname, $pw);
             
             $result = DBConnectionHandler::query($query);
 
-            return $result->num_rows != 0;
+            if($result->num_rows){
+                return self::assocToObj($result->fetch_assoc());
+            }
+
+            return null;
         }
         
     }

@@ -5,22 +5,10 @@
 namespace controllers{  
     require('utility/common.php');
     require('models/user.php');
+    require('utility/session_facade.php');
 
     function postData($key){
         return isset($_POST[$key]) ? trim($_POST[$key]) : '';
-    }
-
-    function getUsers(){
-        $file = fopen('./data/users.txt', 'r') or die('Users.txt data file not found');
-        
-        $users = array();
-        while($line = fgets($file)){
-            $row= explode(' ', $line);
-            $users[trim($row[0])] = trim($row[1]);  //store user name, pasword pairs
-        }
-
-        fclose($file);
-        return $users;
     }
 
     class HomePage{
@@ -94,15 +82,15 @@ namespace controllers{
         public static function post(){
             $uname = postData('user_name');
             $pw = postData('password');
-
-            $users = getUsers();
             
             $_page_message= '';
             // validate user
 
-            $login_valid = \models\User::authenticateUser($uname, $pw);
-            if($login_valid){
+            $user = \models\User::authenticateUser($uname, $pw);
+            if($user){
                 $_page_message= 'Login was successful. Welcome '. $uname;
+                
+                \utility\session\Session::setUser($user);
             }
             else{
                 $_page_message= 'Login failed';
