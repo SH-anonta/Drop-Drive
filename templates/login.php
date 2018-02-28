@@ -10,6 +10,7 @@
             require('fragments/header.php');
         ?>
 
+        <h3>Login</h3>
         <form action="/filehost/login" method="POST">
             <input required type="text" placeholder="User name" name="user_name">
             <br>

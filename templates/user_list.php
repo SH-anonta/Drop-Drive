@@ -8,6 +8,11 @@
     </head>
     
     <body>
+        <?php
+            // show header
+            require('fragments/header.php');
+        ?>
+
         <h3>All users</h3>
         
         <table>

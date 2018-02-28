@@ -6,6 +6,9 @@ namespace controllers{
     require('utility/common.php');
     require('models/user.php');
     require('utility/session_facade.php');
+    
+    // putting this here makes $_SESSION available to every request
+    session_start();
 
     function postData($key){
         return isset($_POST[$key]) ? trim($_POST[$key]) : '';
