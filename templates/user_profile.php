@@ -4,7 +4,12 @@
     <title>Home page</title>
 </head>
     <body>
-        <p>User profile</p>
+        <?php
+            // show header
+            require('fragments/header.php');
+        ?>
+        
+        <h3>User profile</h3>
 
         <table>
             <tr>

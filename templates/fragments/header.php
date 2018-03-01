@@ -6,9 +6,11 @@
         require_once($_SERVER['DOCUMENT_ROOT'] . '/filehost/utility/session_facade.php');
         
         if(\utility\session\Session::userIsLoggedIn()){
-            echo '<a href="/filehost/logout"> Logout</a>';
+            $user = \utility\session\Session::getUser();
+            echo 'Hello ';
+            printf('<a href="/filehost/user/%d">%s</a>', $user->id, $user->user_name);
             echo '|';
-            echo 'Welcome ' . \utility\session\Session::getUser()->user_name;
+            echo '<a href="/filehost/logout"> Logout</a>';
         }
         else{
             echo '<a href="/filehost/register"> Register </a>';
