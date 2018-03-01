@@ -214,5 +214,27 @@ namespace controllers{
         
     }
 
+    // when users request to get some file or folder in their DropDrive storage
+    class Files{
+        public static function get(){
+            if(! \utility\session\Session::userIsLoggedIn()){
+                // if user is not logged in, redirect them to the login page
+                header('location:/filehost/login');
+                return;
+            }
+
+            $current_dir = self::extractFileDir();
+            require('templates/files.php');
+        }
+
+        private static function extractFileDir(){
+            $pattern = '/^^files\/([a-zA-Z0-9-_\/\.]*)$$/';
+            $url = \utility\common\getRequestURI();
+
+            preg_match($pattern, $url,$match);
+            
+            return $match[1];
+        }
+    }
 }
 ?>
