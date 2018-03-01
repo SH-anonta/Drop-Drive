@@ -1,3 +1,6 @@
 *.pyc
 
 .idea/
+
+# user storage
+user_storage/
