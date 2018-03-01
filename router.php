@@ -12,7 +12,7 @@
             array('/^about$/',      \controllers\About::class),         // about
             array('/^user\/(\d+)$/',\controllers\UserProfile::class),   // user/<int:user_id>
             array('/^user\/all$/',  \controllers\UserList::class),      // user/all
-            array('/^files\/([a-zA-Z0-9-_\/\.]*)$/',  \controllers\Files::class),      // files/home
+            array('/^files\/([\w-_\/\.]*)$/',  \controllers\Files::class),      // files/home
         );
                
         // find and return a matching controller for a given url

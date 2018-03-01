@@ -3,9 +3,10 @@
     // namespace Controllers;
     
 namespace controllers{  
-    require('utility/common.php');
-    require('models/user.php');
-    require('utility/session_facade.php');
+    require_once('utility/common.php');
+    require_once('models/user.php');
+    require_once('utility/session_facade.php');
+    require_once('utility/user_storage_handler.php');
     
     // putting this here makes $_SESSION available to every request
     session_start();
@@ -223,16 +224,36 @@ namespace controllers{
                 return;
             }
 
-            $current_dir = self::extractFileDir();
+            $_current_dir = self::extractFileDir();
+            $_current_dir = trim($_current_dir,'/');
+
+            $user = \utility\session\Session::getUser();
+            
+            if(! \utility\storage\UserStorage::directoryIsValid($_current_dir)){
+                // if file or directory does not exist, show error 404
+                require('templates/error404.php');
+                return;
+            }
+
+
+            if(! \utility\storage\UserStorage::isFolder($_current_dir)){
+                // if the requested path is a file, download it
+
+                // this will set header values and read the requested file, then call die();
+                \utility\storage\UserStorage::downloadFile($_current_dir);
+            }
+
+            $_file_list = \utility\storage\UserStorage::getFile($_current_dir);
+
+            // var_dump($files);
             require('templates/files.php');
         }
 
         private static function extractFileDir(){
-            $pattern = '/^^files\/([a-zA-Z0-9-_\/\.]*)$$/';
+            $pattern = '/^files\/([\w-_\/\.]*)$/';
             $url = \utility\common\getRequestURI();
 
             preg_match($pattern, $url,$match);
-            
             return $match[1];
         }
     }
