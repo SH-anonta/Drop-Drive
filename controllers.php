@@ -133,10 +133,11 @@ namespace controllers{
                 require('templates/register.php');
             }
             else{
-                $_page_message = 'All data are valid';
-                require('templates/message_page.php');
-                \models\User::create($uname, $email, $pw);
-
+                // if registration data is valid, create user entry in db, create folder for user storage folder and redirect to login page
+                $user = \models\User::create($uname, $email, $pw);
+                
+                \utility\storage\UserStorage::createStorageForUser($user);
+                header('location:/filehost/login');
             }
         }
 
@@ -165,6 +166,9 @@ namespace controllers{
             else if(! preg_match($valid_pattern, $uname)){
                 $errors[]= 'Username must be alphabet characters only and 4 to 20 characters long';
             }
+            else if(\models\User::getByUserName($uname)){
+                $errors[]= 'This user name is taken';
+            }
 
             return $errors;
         }
@@ -180,6 +184,9 @@ namespace controllers{
             }
             else if(!preg_match($email_pattern, $email)){
                 $errors[]= 'Invalid email address';
+            }
+            else if(\models\User::getByEmail($email)){
+                $errors[]= 'This email is registered with another account';
             }
 
             // todo add check for existing email in db
@@ -238,9 +245,9 @@ namespace controllers{
 
             if(! \utility\storage\UserStorage::isFolder($_current_dir)){
                 // if the requested path is a file, download it
-
-                // this will set header values and read the requested file, then call die();
+                // this will set header values and read the requested file
                 \utility\storage\UserStorage::downloadFile($_current_dir);
+                die();
             }
 
             $_file_list = \utility\storage\UserStorage::getFile($_current_dir);
@@ -250,11 +257,25 @@ namespace controllers{
         }
 
         private static function extractFileDir(){
-            $pattern = '/^files\/([\w-_\/\.]*)$/';
+            $pattern = '/^files\/([\w-_\/%+\.]*)$/';
             $url = \utility\common\getRequestURI();
 
             preg_match($pattern, $url,$match);
-            return $match[1];
+            $path = $match[1];
+
+            return $path;
+        }
+    }
+
+    class Upload{
+        public function post(){
+            $parent_dir = $_POST['parent_folder_path'];
+            $file = $_FILES['file'];
+
+            // todo check for filename conflicts
+
+            \utility\storage\UserStorage::uploadFile($file, $parent_dir);
+            header(sprintf('location:/filehost/files/%s', $parent_dir));
         }
     }
 }

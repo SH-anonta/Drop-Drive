@@ -20,6 +20,7 @@ namespace utility\storage{
         private static function getRealPath($dir){
             $user = \utility\session\Session::getUser();
 
+            // directory should be : document_root/filehost/user_storage/<int:user_id>/<path to file>
             return sprintf('%s/filehost/user_storage/%s/%s', $_SERVER['DOCUMENT_ROOT'], $user->id, $dir);
         }
 
@@ -28,6 +29,8 @@ namespace utility\storage{
             return is_dir($path);
         }
 
+        // attaches a file to response
+        // unescapes the file name characters using urldecode();
         public static function downloadFile($path){
             $path = self::getRealPath($path);
 
@@ -36,9 +39,31 @@ namespace utility\storage{
 
             header("Content-Transfer-Encoding: Binary");
             header("Content-Length:".filesize($path));
-            header(sprintf("Content-Disposition: attachment;filename=%s", $filename));
+            header(sprintf("Content-Disposition: attachment;filename=%s", urldecode($filename)));
             readfile($path);
-            die();
+        }
+
+        // this will escape some characters in file name using urlencode
+        public static function uploadFile($file, $parent_dir){
+            $parent_dir = self::getRealPath($parent_dir);
+            $new_file_path = sprintf('%s%s', $parent_dir, urlencode($file['name']));
+            
+            // var_dump($new_file_path);
+            $success = move_uploaded_file($file["tmp_name"], $new_file_path);
+            if(!$success){
+                die('Upload failed');
+            }
+
+        }
+
+        public static function createStorageForUser($user){
+            $new_dir_path = sprintf('%s/filehost/user_storage/%s', $_SERVER['DOCUMENT_ROOT'], $user->id);
+
+            if(self::directoryIsValid($new_dir_path)){
+                die('Something went wrong. Storage folder of User ID already exists');
+            }
+
+            mkdir($new_dir_path);
         }
     }
 }

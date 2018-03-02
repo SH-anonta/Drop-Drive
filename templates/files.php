@@ -9,38 +9,56 @@
 
 <head>
     <title>Files</title>
+
+<style>
+    #MainBody{
+        width: 70%;
+        float: left;
+    }
+
+    #SideBar{
+        width: 30%;
+        display: inline;
+    }
+</style>
 </head>
 
 <body>
     <?php
         // show header
         require('fragments/header.php');
-        printf('Directory: %s', $_current_dir);
+        printf('Directory: %s', urldecode($_current_dir));
+        echo '<br>';
     ?>
 
-    <form action="/filehost/upload" method="POST">
-        <input type="file" name="file">
-        <input type="hidden" name="parent_folder_path" value="<?php echo $_current_dir?>">
-        <button type="submit">Upload</button>
-    </form>
+    <div id="MainBody">
+        <h3>Files:</h3>
 
-    <h3>Files:</h3>
+        <table>
+            <th>Name</th>
+            <?php
+                
+                // todo: file urls contain double slash '//' for first level sub directories
+                foreach($_file_list as $file){
+                    echo '<tr>';
+                        echo '<td>';
+                            printf('<a href="/filehost/files/%s/%s">%s</a>', $_current_dir, $file, urldecode($file));
+                        echo '</td>';
+                    echo '</tr>';
+                }
+            ?>
+        </table>
+    </div>
 
-    <table>
-        <th>Name</th>
-        <th>Type</th>
-        <?php
-            
-            // todo: file urls contain double slash '//' for first level sub directories
-            foreach($_file_list as $file){
-                echo '<tr>';
-                    echo '<td>';
-                        printf('<a href="/filehost/files/%s/%s">%s</a>', $_current_dir, $file, $file);
-                    echo '</td>';
-                echo '</tr>';
-            }
-        ?>
-    </table>
+    <div id="SideBar">
+        <h3>Upload file:</h3>
+        <form action="/filehost/upload" method="POST" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="hidden" name="parent_folder_path" value="<?php echo $_current_dir?>/">  
+            <button type="submit">Upload</button>
+        </form>
+    </div>
+
 
 </body>
 </html>

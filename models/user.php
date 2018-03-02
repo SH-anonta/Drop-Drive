@@ -37,6 +37,8 @@ namespace models{
         public static function create($uname, $email, $pw){
             $query = sprintf('INSERT INTO user (UserName, Email, Password) VALUES(\'%s\',\'%s\',\'%s\')', $uname, $email, $pw);
             DBConnectionHandler::query($query);
+
+            return self::getByUserName($uname);
         }
 
         public static function getByID($id){
@@ -52,6 +54,31 @@ namespace models{
             }
         }
 
+        // find user by UserName, return null if not found
+        public static function getByUserName($uname){
+            $query = sprintf('SELECT * from user where UserName = \'%s\'', $uname);
+            $result = DBConnectionHandler::query($query);
+
+            if($result->num_rows == 0){
+                return null;
+            }
+            else{
+                return self::assocToObj($result->fetch_assoc());
+            }
+        }
+
+        // find user by Email, return null if not found
+        public static function getByEmail($email){
+            $query = sprintf('SELECT * from user where Email = \'%s\'', $email);
+            $result = DBConnectionHandler::query($query);
+
+            if($result->num_rows == 0){
+                return null;
+            }
+            else{
+                return self::assocToObj($result->fetch_assoc());
+            }
+        }
 
         // see if name and password match,
         // return user object if username and password are valid
