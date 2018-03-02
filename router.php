@@ -14,6 +14,7 @@
             array('/^user\/all$/',  \controllers\UserList::class),      // user/all
             array('/^files\/([\w-_\/%+\.]*)$/',  \controllers\Files::class),  // files/home
             array('/^upload$/',  \controllers\Upload::class),      // upload
+            array('/^mkdir$/',  \controllers\MakeDirectory::class),      // upload
         );
                
         // find and return a matching controller for a given url

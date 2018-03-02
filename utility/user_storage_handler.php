@@ -65,6 +65,13 @@ namespace utility\storage{
 
             mkdir($new_dir_path);
         }
+
+        public static function createDirectory($parent_dir, $folder_name){
+            $parent_dir = self::getRealPath($parent_dir);
+            $folder_name = urlencode($folder_name);
+
+            mkdir($parent_dir . '/'. $folder_name);
+        }
     }
 }
 

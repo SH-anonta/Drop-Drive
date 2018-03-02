@@ -289,5 +289,45 @@ namespace controllers{
             header(sprintf('location:/filehost/files/%s', $parent_dir));
         }
     }
+
+    // handels request for creating folders in users' storage
+    class MakeDirectory{
+        public static function post(){
+            $parent_dir = $_POST['parent_folder_path'];
+            $folder_name = $_POST['folder_name'];
+
+            if(! \utility\storage\UserStorage::directoryIsValid($parent_dir)){
+                // if parent directory does not exist, show error 404
+                $_page_message = 'Something went wrong, parent folder does not exist';
+                require('templates/message_page.php');
+                return;
+            }
+
+            $errors = self::validateFolderName($folder_name);
+            
+            if(!empty($errors)){
+                // if folder name is invalid, show error message
+                $_page_message = $errors[0];
+                require('templates/message_page.php');
+                return;
+            }
+            
+            \utility\storage\UserStorage::createDirectory($parent_dir, $folder_name);
+            header(sprintf('location:/filehost/files/%s', $parent_dir));
+        }
+
+        private static function validateFolderName($folder_name){
+            $valid_folder_name_pattern = '/^[\w-_ ]+$/';
+            
+            $errors = array();
+            
+            if(!preg_match($valid_folder_name_pattern, $folder_name)){
+                $errors[]  = 'Invalid folder name';
+            }
+
+            return $errors;
+        }
+
+    }
 }
 ?>

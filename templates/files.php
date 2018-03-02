@@ -8,12 +8,14 @@
 ?>
 
 <head>
+
     <title>Files</title>
 
 <style>
     #MainBody{
         width: 70%;
         float: left;
+        min-height: 200px;
     }
 
     #SideBar{
@@ -57,6 +59,16 @@
             <input type="hidden" name="parent_folder_path" value="<?php echo $_current_dir?>/">  
             <button type="submit">Upload</button>
         </form>
+                
+        <br>
+        <br>
+        <h3>Create folder</h3>
+        <form action="/filehost/mkdir" method="POST">
+            <input type="hidden" name="parent_folder_path" value="<?php echo $_current_dir?>/">  
+            <input required name="folder_name" placeholder="Folder name">
+            <button type="submit">Create</button>
+        </form>
+
     </div>
 
 
