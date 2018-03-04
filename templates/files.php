@@ -22,6 +22,10 @@
         width: 30%;
         display: inline;
     }
+
+    #FilesTable a{
+        text-decoration: none;
+    }
 </style>
 </head>
 
@@ -36,7 +40,7 @@
     <div id="MainBody">
         <h3>Files:</h3>
 
-        <table>
+        <table id="FilesTable">
             <th>Name</th>
             <?php
                 
