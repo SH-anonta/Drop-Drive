@@ -35,6 +35,7 @@ namespace models{
         }
 
         public static function create($uname, $email, $pw){
+            $pw = md5($pw);
             $query = sprintf('INSERT INTO user (UserName, Email, Password) VALUES(\'%s\',\'%s\',\'%s\')', $uname, $email, $pw);
             DBConnectionHandler::query($query);
 
@@ -83,8 +84,8 @@ namespace models{
         // see if name and password match,
         // return user object if username and password are valid
         public static function authenticateUser($uname, $pw){
+            $pw = md5($pw);
             $query = sprintf('SELECT * from user where UserName=\'%s\' and Password=\'%s\' ', $uname, $pw);
-            
             $result = DBConnectionHandler::query($query);
 
             if($result->num_rows){
