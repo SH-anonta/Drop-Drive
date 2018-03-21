@@ -77,6 +77,8 @@
 
     <pre id="result"></pre>
 
+<script type="text/javascript" src="/filehost/static/script/utility.js"></script>
+
 <script>
     (function(){
         // script expects to find the following elements:

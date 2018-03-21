@@ -279,6 +279,7 @@ namespace controllers{
     }
 
     // handle requests for a detailed list of file in certain folder in the users' storage
+    // return json description of the files in a specified folder in the uesrs' storage
     class FileList{
 
         // assumes the following POST data are set: 
@@ -293,13 +294,10 @@ namespace controllers{
             $user = \utility\session\Session::getUser();
             $dir = \utility\common\getPostData('current_dir');
 
+            // array of files and their details
             $file_list = \utility\storage\UserStorage::getFilesInFolder($dir);
 
-            echo 'here ', $dir;
-            var_dump($file_list);
-            // var_dump($_POST);
-            // echo '<br>';
-            // echo 'hello';
+            echo json_encode($file_list);
         }
 
     }
