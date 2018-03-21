@@ -10,11 +10,11 @@ namespace models{
 
         public function connect_to_db(){
             self::$db_connection = new \mysqli(
-                        self::$servername,
-                        self::$username,
-                        self::$password,
-                        self::$dbname
-                    );
+                self::$servername,
+                self::$username,
+                self::$password,
+                self::$dbname
+            );
 
             if(self::$db_connection->connect_error){
                 die('Connection failed: '. $db_connection->connect_error);

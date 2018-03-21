@@ -14,6 +14,10 @@ namespace utility\common{
 	function getPostData($key){
 		return isset($_POST[$key])?  $_POST[$key] : '';
 	}
+	
+	function getGetData($key){
+		return isset($_POST[$key])?  $_POST[$key] : '';
+	}
 }
 
 ?>

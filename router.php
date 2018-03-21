@@ -13,6 +13,7 @@
             array('/^user\/(\d+)$/',\controllers\UserProfile::class),   // user/<int:user_id>
             array('/^user\/all$/',  \controllers\UserList::class),      // user/all
             array('/^files\/([\w-_\/%+\.]*)$/',  \controllers\Files::class),  // files/home
+            array('/^file-list$/',  \controllers\FileList::class),  // files-list
             array('/^upload$/',  \controllers\Upload::class),      // upload
             array('/^mkdir$/',  \controllers\MakeDirectory::class),      // upload
         );

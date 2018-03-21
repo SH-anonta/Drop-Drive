@@ -75,6 +75,36 @@
 
     </div>
 
+    <pre id="result"></pre>
 
+<script>
+    (function(){
+        // script expects to find the following elements:
+        var result = document.querySelector('#result');
+        var current_dir = document.querySelector('input[name=parent_folder_path]').value;
+        
+        
+        function handleResponse() {
+            if (this.readyState == 4 && this.status == 200) {
+                result.textContent = this.responseText;
+            }
+            else if(this.status != 200){
+                console.log('failed to get file list, status code: ', this.status)
+            }
+        };
+        
+        
+        request = new XMLHttpRequest();
+        request.open('POST', '/filehost/file-list', true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.onreadystatechange = handleResponse;
+        var post_data = 'current_dir='+current_dir+'&';
+        
+        request.send(post_data);
+    })();
+
+</script> 
+            
+    
 </body>
 </html>

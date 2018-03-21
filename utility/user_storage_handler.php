@@ -6,6 +6,29 @@ namespace utility\storage{
     // A file path inside the users' storage will be mapped to the actual path in 
     class UserStorage{
 
+        // json format: 
+        public static function getFilesInFolder($dir){
+            $dir = self::getRealPath($dir);
+            
+            // includes name of  files and folders in $dir
+            $files = scandir($dir);
+
+            $file_list = array();
+            
+            foreach($files as $f){
+                // absolute path to path
+                $full_path = sprintf('%s%s', $dir, $f);
+                $fdetail = array();
+
+                $fdetail['name'] = $f;
+                $fdetail['size'] = filesize($full_path);
+                $fdetail['type'] = is_dir($full_path) ? 'folder': 'file';
+                $file_list[] = $fdetail;
+            }
+            
+            return $file_list;
+        }
+
         public static function getFile($dir){
             $dir = self::getRealPath($dir);
             return scandir($dir);

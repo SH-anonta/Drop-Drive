@@ -278,6 +278,32 @@ namespace controllers{
         }
     }
 
+    // handle requests for a detailed list of file in certain folder in the users' storage
+    class FileList{
+
+        // assumes the following POST data are set: 
+        // parent_dir : directory to the folder of which the files will be listed, blank means root folder
+        public static function post(){
+            if(! \utility\session\Session::userIsLoggedIn()){
+                // if user is not logged in, redirect them to the login page
+                header('location:/filehost/login');
+                return;
+            }
+
+            $user = \utility\session\Session::getUser();
+            $dir = \utility\common\getPostData('current_dir');
+
+            $file_list = \utility\storage\UserStorage::getFilesInFolder($dir);
+
+            echo 'here ', $dir;
+            var_dump($file_list);
+            // var_dump($_POST);
+            // echo '<br>';
+            // echo 'hello';
+        }
+
+    }
+
     class Upload{
         public function post(){
             $parent_dir = $_POST['parent_folder_path'];
