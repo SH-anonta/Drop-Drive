@@ -18,6 +18,17 @@ namespace utility\common{
 	function getGetData($key){
 		return isset($_POST[$key])?  $_POST[$key] : '';
 	}
+
+	function urlEncodePath($url){
+		$parts = explode('/', $url);
+		$encoded= array();
+
+		foreach($parts as $p){
+			$encoded[] = urlencode($p);
+		}
+
+		return implode('/', $encoded);
+	}
 }
 
 ?>

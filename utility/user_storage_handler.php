@@ -9,7 +9,7 @@ namespace utility\storage{
         // json format: 
         public static function getFilesInFolder($dir){
             $dir = self::getRealPath($dir);
-            
+
             // includes name of  files and folders in $dir
             $files = scandir($dir);
 
@@ -20,7 +20,8 @@ namespace utility\storage{
                 $full_path = sprintf('%s%s', $dir, $f);
                 $fdetail = array();
 
-                $fdetail['name'] = $f;
+                $fdetail['name'] = urldecode($f);
+                $fdetail['encoded_name'] = $f;
                 $fdetail['size'] = filesize($full_path);
                 $fdetail['type'] = is_dir($full_path) ? 'folder': 'file';
                 $file_list[] = $fdetail;

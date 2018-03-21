@@ -27,6 +27,7 @@
         text-decoration: none;
     }
 </style>
+
 </head>
 
 <body>
@@ -41,18 +42,11 @@
         <h3>Files:</h3>
 
         <table id="FilesTable">
-            <th>Name</th>
-            <?php
-                
-                // todo: file urls contain double slash '//' for first level sub directories
-                foreach($_file_list as $file){
-                    echo '<tr>';
-                        echo '<td>';
-                            printf('<a href="/filehost/files/%s/%s">%s</a>', $_current_dir, $file, urldecode($file));
-                        echo '</td>';
-                    echo '</tr>';
-                }
-            ?>
+            <tr>
+                <th>Name</th>
+                <th>size</th>
+            </tr>
+            
         </table>
     </div>
 
@@ -75,38 +69,10 @@
 
     </div>
 
-    <pre id="result"></pre>
-
+    <pre id="debug"></pre>
 <script type="text/javascript" src="/filehost/static/script/utility.js"></script>
-
-<script>
-    (function(){
-        // script expects to find the following elements:
-        var result = document.querySelector('#result');
-        var current_dir = document.querySelector('input[name=parent_folder_path]').value;
-        
-        
-        function handleResponse() {
-            if (this.readyState == 4 && this.status == 200) {
-                result.textContent = this.responseText;
-            }
-            else if(this.status != 200){
-                console.log('failed to get file list, status code: ', this.status)
-            }
-        };
-        
-        
-        request = new XMLHttpRequest();
-        request.open('POST', '/filehost/file-list', true);
-        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
-        request.onreadystatechange = handleResponse;
-        var post_data = 'current_dir='+current_dir+'&';
-        
-        request.send(post_data);
-    })();
-
-</script> 
-            
+<script type="text/javascript" src="/filehost/static/script/files.js"></script>
+           
     
 </body>
 </html>

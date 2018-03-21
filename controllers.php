@@ -245,6 +245,7 @@ namespace controllers{
             $_current_dir = self::extractFileDir();
             $_current_dir = trim($_current_dir,'/');
 
+
             $user = \utility\session\Session::getUser();
             
             if(! \utility\storage\UserStorage::directoryIsValid($_current_dir)){
@@ -293,7 +294,14 @@ namespace controllers{
 
             $user = \utility\session\Session::getUser();
             $dir = \utility\common\getPostData('current_dir');
+            $dir = $_POST['current_dir'];
 
+            $dir = \utility\common\urlEncodePath($dir);
+            // $dir = urlencode($dir);
+            // remove '%2F' from the end
+            // $dir = substr($dir, 0, strlen($dir)-3);
+
+            // var_dump($dir);
             // array of files and their details
             $file_list = \utility\storage\UserStorage::getFilesInFolder($dir);
 
