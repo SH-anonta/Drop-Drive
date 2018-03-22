@@ -33,9 +33,20 @@
         return file_link;
     }
 
+    function createCheckbox(file_detail){
+        checkbox= document.createElement('input');
+
+        checkbox.setAttribute('type', 'checkbox');
+        checkbox.setAttribute('class', 'file_selection_chbox');
+        checkbox.setAttribute('value', file_detail['encoded_name']);
+        
+        return checkbox;
+    }
+
     function insertFilesTableRow(file){
         // create empty rows and columns
         var row = files_table.insertRow();
+        var checkbox = row.insertCell();    // checkbox for selecting file
         var icon = row.insertCell();
         var name = row.insertCell();
         var size = row.insertCell();
@@ -45,6 +56,9 @@
 
         // icon is either folder or file
         icon.innerHTML = '<img class="IconImage" src="'+(file['type'] == 'file' ? file_icon_url : folder_icon_url) + '">';
+
+        //checkbox for selecting file
+        checkbox.appendChild(createCheckbox(file));
 
         name.appendChild(file_link);
         var file_size = file['size'];

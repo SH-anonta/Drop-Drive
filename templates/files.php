@@ -54,6 +54,9 @@
 
         <table id="FilesTable">
             <tr>
+                <th>    
+                    <input type="checkbox">
+                </th>
                 <th></th>
                 <th>Name</th>
                 <th>size</th>
