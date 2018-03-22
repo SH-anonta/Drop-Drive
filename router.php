@@ -16,6 +16,7 @@
             array('/^file-list$/',  \controllers\FileList::class),  // files-list
             array('/^upload$/',  \controllers\Upload::class),      // upload
             array('/^mkdir$/',  \controllers\MakeDirectory::class),      // upload
+            array('/^delete-files$/',  \controllers\DeleteFiles::class),      // upload
         );
                
         // find and return a matching controller for a given url

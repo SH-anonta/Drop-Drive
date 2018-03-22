@@ -361,5 +361,36 @@ namespace controllers{
         }
 
     }
-}
+
+    class DeleteFiles{
+        public static function post(){
+            $json = \utility\common\getPostData('json_data');
+            $json = json_decode($json, true);
+            
+            $file_list = $json['file_names'];
+            $parent_directory = $json['parent_directory'];
+
+            // var_dump($file_list);
+            // var_dump($parent_directory);
+
+            foreach($file_list as $file){
+                $file = urlencode($file);
+
+                // unauthorized access by skipping reletive paths
+                // an empty filename with '/' as parent folder would delete the uers' storage folder
+                if($file == '' || $file == '.' || $file == '..'){
+                    continue;
+                }
+                
+                $path = implode('', array($parent_directory, $file));
+                // echo $path;
+                // echo '<br>';
+
+                \utility\storage\UserStorage::deleteFile($path);
+
+                
+            }
+        }
+    }
+}   
 ?>

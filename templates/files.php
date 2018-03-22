@@ -52,6 +52,7 @@
 </head>
 
 <body>
+    <pre id="debug"></pre>
     <?php
         // show header
         require('fragments/header.php');
@@ -95,9 +96,11 @@
             <button type="submit">Create</button>
         </form>
 
+        <br>
+        <button id="DeleteBtn">Delete</button>
     </div>
 
-    <pre id="debug"></pre>
+    
 <script type="text/javascript" src="/filehost/static/script/utility.js"></script>
 <script type="text/javascript" src="/filehost/static/script/files.js"></script>
            

@@ -7,7 +7,7 @@
 // code for file list fetching and showing
 (function(){
     var files_table = $('#FilesTable')[0];
-    current_dir = $('input[name=parent_folder_path]')[0].value;
+    var current_dir = $('input[name=parent_folder_path]')[0].value;
     current_dir = current_dir == '/' ? '' : current_dir;
     var file_icon_url = '/filehost/static/image/file_icon.png';
     var folder_icon_url = '/filehost/static/image/folder_icon.png';
@@ -185,7 +185,65 @@
 })();
 
 //code for doing operations on files
-
+//IMPORTANT: Selection toggle should apply only to visible rows, invisible rows should be unseleceted 
 (function(){
+    var debug = $('#debug')[0];     // pre element used for debugging 
+    var delete_btn  = $('#DeleteBtn')[0];
+    var current_dir = $('input[name=parent_folder_path]')[0].value;
+    current_dir = current_dir == '/' ? '' : current_dir;
 
+    function getSelectedFileNames(){
+        rows = $('#FilesTable tr');
+        file_names = [];
+
+        //skip the checkbox in heading 
+        for(i= 1, len= rows.length; i<len; i++){
+            var checked = rows[i].querySelector('input[type=checkbox]').checked;
+            
+            if(rows[i].style.display != 'none' && checked){
+                var name = rows[i].querySelector('a.file_name').innerText;
+                file_names.push(name);
+            }
+        }
+
+        return file_names;
+    }
+
+    function responseHandler(event){
+        if (this.readyState == 4 && this.status == 200) {
+            debug.innerHTML = this.responseText; // todo remove
+            window.location.href = window.location.href;
+        }
+        else if(this.status != 200){
+            console.log('Delete request failed, Status code: ', this.status)
+        }
+    }
+
+    function sendRequest(payload){
+        var url = '/filehost/delete-files';
+
+        request = new XMLHttpRequest();
+        request.open('POST', url, true);
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+        request.onreadystatechange = responseHandler;
+        
+        // console.log(payload);
+        // request.send(payload);
+        request.send('json_data='+payload);
+    }
+
+    function handleDeleteButtonClick(){
+        var names = getSelectedFileNames();
+        var payload = {'file_names' : names, 'parent_directory' : current_dir};
+        var payload = JSON.stringify(payload);
+
+        if(names.length == 0){
+            alert('No file selected');
+        }
+
+        //todo add confirmation alert
+        sendRequest(payload);
+    }
+
+    delete_btn.addEventListener('click', handleDeleteButtonClick);
 })();

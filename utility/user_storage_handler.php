@@ -96,6 +96,19 @@ namespace utility\storage{
 
             mkdir($parent_dir . '/'. $folder_name);
         }
+
+        //delete folder or file in user storage
+        // keep running silently if said file not found
+        public static function deleteFile($path){
+            $path = self::getRealPath($path);
+            if(!is_dir($path)){
+                unlink($path);
+            }
+            else{
+                echo 'can\'t delete folders yet';
+            }
+            // var_dump($path);
+        }
     }
 }
 
