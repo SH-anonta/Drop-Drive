@@ -112,7 +112,7 @@
 
 // code for searching files in current folder
 (function(){
-    search_box= $('#SearchBox')[0];
+    var search_box= $('#SearchBox')[0];
     var files_table = $('#FilesTable')[0];
 
     function showAllRows(){
@@ -156,6 +156,36 @@
 })();
 
 // code for file selection
+//IMPORTANT: Selection toggle should apply only to visible rows, invisible rows should be unseleceted 
 (function(){
-    var checkall = $('#toggleCheckAllFiles')[0];
+    var toggle_selectoin_chbox = $('#toggleCheckAllFiles')[0];
+    var files_table = $('#FilesTable')[0];
+
+    // either set all rows to selected or unselected
+    function toggleAllRows(selected){
+        var rows = files_table.querySelectorAll('tr');
+
+        for(i= 1, len= rows.length; i<len; i++){
+            var checkbox = rows[i].querySelector('input[type=checkbox]');
+            
+            if(rows[i].style.display != 'none'){
+                checkbox.checked= selected;
+            }
+            else{
+                checkbox.checked= false;
+            }
+        }
+    }
+
+    function handleToggleEvent(event){
+        toggleAllRows(this.checked);
+    }
+
+    toggle_selectoin_chbox.addEventListener('change', handleToggleEvent);
+})();
+
+//code for doing operations on files
+
+(function(){
+
 })();

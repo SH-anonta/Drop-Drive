@@ -77,7 +77,7 @@
     </div>
 
     <div id="SideBar">
-        <input id="SearchBox" type="text" placeholder="Search">
+        <input id="SearchBox" type="text" placeholder="&#9906 Search">
 
         <h3>Upload file:</h3>
         <form action="/filehost/upload" method="POST" enctype="multipart/form-data">
