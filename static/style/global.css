@@ -3,6 +3,15 @@ body{
 	margin-right: 10%;
 }
 
+#Header{
+	min-height: 60px;
+	border-bottom: solid thin;
+}
+
+#Header * {
+	margin-right: 10px;
+}
+
 img.IconImage{
 	height: 20px;
 	width: 20px;

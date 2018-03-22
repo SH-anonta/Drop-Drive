@@ -65,7 +65,7 @@
         <table id="FilesTable">
             <tr>
                 <td colspan="1">    
-                    <input type="checkbox">
+                    <input id="toggleCheckAllFiles" type="checkbox">
                 </td>
                 <td></td>
                 <td>Name</td>

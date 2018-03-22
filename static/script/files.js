@@ -154,3 +154,8 @@
     search_box.addEventListener("keyup", searchQueryHandler);
 
 })();
+
+// code for file selection
+(function(){
+    var checkall = $('#toggleCheckAllFiles')[0];
+})();
