@@ -5,6 +5,7 @@
     ?>
     <head>
         <title>All Users</title>
+        <link rel="stylesheet" href="/filehost/static/style/global.css">
     </head>
     
     <body>

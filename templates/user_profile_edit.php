@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <title>Edit user</title>
+    <link rel="stylesheet" href="/filehost/static/style/global.css">
 </head>
     <body>
         <p>User profile</p>

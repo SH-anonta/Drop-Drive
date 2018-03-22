@@ -11,6 +11,7 @@
 
     <title>Files</title>
 
+    <link rel="stylesheet" href="/filehost/static/style/global.css">
 <style>
     #MainBody{
         width: 70%;
