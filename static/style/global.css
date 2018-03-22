@@ -8,6 +8,6 @@ img.IconImage{
 	width: 20px;
 }
 
-input[type=text], input[type=password]{
+input[type=text], input[type=password], input[type=email]{
 	padding: 3px;
 }

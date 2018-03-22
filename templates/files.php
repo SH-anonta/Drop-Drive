@@ -91,7 +91,7 @@
         <h3>Create folder</h3>
         <form action="/filehost/mkdir" method="POST">
             <input type="hidden" name="parent_folder_path" value="<?php echo $_current_dir?>/">  
-            <input required name="folder_name" placeholder="Folder name">
+            <input type="text" required name="folder_name" placeholder="Folder name">
             <button type="submit">Create</button>
         </form>
 
