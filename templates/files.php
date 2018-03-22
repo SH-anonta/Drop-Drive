@@ -14,18 +14,28 @@
     <link rel="stylesheet" href="/filehost/static/style/global.css">
 <style>
     #MainBody{
-        width: 70%;
+        width: 60%;
         float: left;
         min-height: 200px;
     }
 
     #SideBar{
-        width: 30%;
+        width: 40%;
         display: inline;
     }
 
     #FilesTable a{
         text-decoration: none;
+    }
+
+    #FilesTable td{
+        min-width: 30px;
+    }
+
+    #FilesTable > tr{
+	    margin-top: 30px;
+        border-width: thin;
+        border-bottom-style: solid;
     }
 </style>
 
@@ -44,6 +54,7 @@
 
         <table id="FilesTable">
             <tr>
+                <th></th>
                 <th>Name</th>
                 <th>size</th>
             </tr>

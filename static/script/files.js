@@ -1,11 +1,17 @@
 // js code for files.php template
 // assumes utility.js to be present before execution
-
+// assumes the following static resources to be present
+// /filehost/static/image/file_icon.png
+// /filehost/static/image/folder_icon.png
 
 (function(){
     var files_table = $('#FilesTable')[0];
     current_dir = $('input[name=parent_folder_path]')[0].value;
-    var debug = $('#debug')[0];
+    current_dir = current_dir == '/' ? '' : current_dir;
+    var file_icon_url = '/filehost/static/image/file_icon.png';
+    var folder_icon_url = '/filehost/static/image/folder_icon.png';
+
+    var debug = $('#debug')[0];     // pre element used for debugging 
 
     // initially null, contains json recieved from server
     // describing the files present in current_dir in users' storage
@@ -23,20 +29,28 @@
         file_link.innerHTML = file_detail['name'];
         var file_url= '/filehost/files/'+current_dir+file_detail['encoded_name'];
         file_link.setAttribute('href', file_url);
+
         return file_link;
     }
 
     function insertFilesTableRow(file){
         // create empty rows and columns
         var row = files_table.insertRow();
+        var icon = row.insertCell();
         var name = row.insertCell();
         var size = row.insertCell();
         var last_modified = row.insertCell();;
+        
         var file_link = createAnchorElement(file);
+
+        // icon is either folder or file
+        icon.innerHTML = '<img class="IconImage" src="'+(file['type'] == 'file' ? file_icon_url : folder_icon_url) + '">';
 
         name.appendChild(file_link);
         var file_size = file['size'];
         size.innerHTML =  file_size == 0 ? '' : file_size;
+
+
     }
 
     // get a list of file details, and populate the files table with new data
@@ -53,7 +67,7 @@
 
         function responseHandler() {
             if (this.readyState == 4 && this.status == 200) {
-                debug.innerHTML = this.responseText; // todo re
+                // debug.innerHTML = this.responseText; // todo remove
                 file_detail_list = JSON.parse(this.responseText);
 
                 if(onRetrievalHook){
@@ -70,7 +84,8 @@
         request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
         request.onreadystatechange = responseHandler;
         var post_data = 'current_dir='+current_dir;
-        console.log(post_data);
+        
+        // console.log(post_data);
         request.send(post_data);
     }
     

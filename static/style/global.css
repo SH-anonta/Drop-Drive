@@ -2,3 +2,8 @@ body{
 	margin-left: 10%;
 	margin-right: 10%;
 }
+
+img.IconImage{
+	height: 20px;
+	width: 20px;
+}
