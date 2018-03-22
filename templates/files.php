@@ -16,7 +16,7 @@
     #MainBody{
         width: 60%;
         float: left;
-        min-height: 200px;
+        min-height: 300px;
     }
 
     #SideBar{
@@ -24,8 +24,13 @@
         display: inline;
     }
 
+    /* #FilesTable tr td{
+        border: 1px solid black;
+    } */
+
     #FilesTable a{
         text-decoration: none;
+        color: blue;
     }
 
     #FilesTable td{
@@ -37,6 +42,11 @@
         border-width: thin;
         border-bottom-style: solid;
     }
+
+    #SearchBox{
+        padding: 5px;
+    }
+
 </style>
 
 </head>
@@ -54,18 +64,21 @@
 
         <table id="FilesTable">
             <tr>
-                <th>    
+                <td colspan="1">    
                     <input type="checkbox">
-                </th>
-                <th></th>
-                <th>Name</th>
-                <th>size</th>
+                </td>
+                <td></td>
+                <td>Name</td>
+                <td>size</td>
+                <td></td>
             </tr>
             
         </table>
     </div>
 
     <div id="SideBar">
+        <input id="SearchBox" type="text" placeholder="Search">
+
         <h3>Upload file:</h3>
         <form action="/filehost/upload" method="POST" enctype="multipart/form-data">
             <input type="file" name="file">

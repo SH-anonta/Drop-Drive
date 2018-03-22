@@ -7,3 +7,7 @@ img.IconImage{
 	height: 20px;
 	width: 20px;
 }
+
+input[type=text], input[type=password]{
+	padding: 3px;
+}

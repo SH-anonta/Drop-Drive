@@ -4,6 +4,7 @@
 // /filehost/static/image/file_icon.png
 // /filehost/static/image/folder_icon.png
 
+// code for file list fetching and showing
 (function(){
     var files_table = $('#FilesTable')[0];
     current_dir = $('input[name=parent_folder_path]')[0].value;
@@ -29,6 +30,7 @@
         file_link.innerHTML = file_detail['name'];
         var file_url= '/filehost/files/'+current_dir+file_detail['encoded_name'];
         file_link.setAttribute('href', file_url);
+        file_link.setAttribute('class', 'file_name');
 
         return file_link;
     }
@@ -106,4 +108,49 @@
     // innitially load files table
     fetchFileList(reloadFIlesTable);
     
+})();
+
+// code for searching files in current folder
+(function(){
+    search_box= $('#SearchBox')[0];
+    var files_table = $('#FilesTable')[0];
+
+    function showAllRows(){
+        var rows = files_table.querySelectorAll('tr');
+        
+        // start from 1 to skip the header of table
+        for(i= 0, len= rows.length; i<len; i++){
+            rows[i].style.display = 'block';
+        }
+    }
+
+    function showMatchedRows(query){
+        query = query.toLowerCase();
+
+        var rows = files_table.querySelectorAll('tr');
+
+        // start from 1 to skip the header of table
+        for(i= 1, len= rows.length; i<len; i++){
+            var fname = rows[i].querySelector('.file_name').innerText.toLowerCase();
+            rows[i].style.display = fname.includes(query) ? 'block' : 'none';
+        }
+
+        rows[0].style.display = 'block';
+    }
+
+    function searchQueryHandler(event){
+        
+        var query = this.value;
+        showAllRows();
+
+        if(query === ''){
+            showAllRows();
+        }
+        else{
+            showMatchedRows(query);
+        }
+    }
+
+    search_box.addEventListener("keyup", searchQueryHandler);
+
 })();
