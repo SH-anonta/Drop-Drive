@@ -314,8 +314,14 @@ namespace controllers{
         public function post(){
             $parent_dir = $_POST['parent_folder_path'];
             $file = $_FILES['file'];
-
-            // todo check for filename conflicts
+            $fname = urlencode($file['name']);
+            
+            if(\utility\storage\UserStorage::directoryIsValid($parent_dir . '/'. $fname)){
+                // if folder already exists
+                $_page_message = 'File not uploaded due to name conflict';
+                require('templates/message_page.php');
+                return;
+            }
 
             \utility\storage\UserStorage::uploadFile($file, $parent_dir);
             header(sprintf('location:/filehost/files/%s', $parent_dir));
@@ -335,6 +341,13 @@ namespace controllers{
                 return;
             }
 
+            if(\utility\storage\UserStorage::directoryIsValid($parent_dir . '/'. urlencode($folder_name))){
+                // if folder already exists
+                $_page_message = 'Folder not created due to name conflict';
+                require('templates/message_page.php');
+                return;
+            }
+
             $errors = self::validateFolderName($folder_name);
             
             if(!empty($errors)){
@@ -343,7 +356,7 @@ namespace controllers{
                 require('templates/message_page.php');
                 return;
             }
-            
+
             \utility\storage\UserStorage::createDirectory($parent_dir, $folder_name);
             header(sprintf('location:/filehost/files/%s', $parent_dir));
         }

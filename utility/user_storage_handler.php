@@ -40,6 +40,11 @@ namespace utility\storage{
             return is_dir($dir) || file_exists($dir);
         }
 
+        public static function fileWithPathExists($dir){
+            $dir = self::getRealPath($dir);
+            return is_dir($dir) || file_exists($dir);
+        }
+
         // This maps user storage paths to actual paths
         private static function getRealPath($dir){
             $user = \utility\session\Session::getUser();
@@ -109,6 +114,8 @@ namespace utility\storage{
             }
             // var_dump($path);
         }
+
+
     }
 }
 
