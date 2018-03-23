@@ -72,7 +72,9 @@
     // get a list of file details, and populate the files table with new data
     function reloadFIlesTable(file_list){
         clearFilesTable();
-        for(i in file_list){
+
+        //skip first two files, current directory and parent directory 
+        for(var i= 2, len= file_list.length; i<len; i++){
             insertFilesTableRow(file_list[i]);
         }
     }
